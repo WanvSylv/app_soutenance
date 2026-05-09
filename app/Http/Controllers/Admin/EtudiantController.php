@@ -7,6 +7,8 @@ use App\Models\Etudiant;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeUserMail;
 use Illuminate\Support\Str;
 
 class EtudiantController extends Controller
@@ -61,8 +63,11 @@ class EtudiantController extends Controller
             'quitus_valide' => false,
         ]);
 
-        // Envoi d'email fictif (à implémenter réellement plus tard)
-        // Mail::to($user->email)->send(new WelcomeEtudiantMail($user, $password));
+        try {
+            Mail::to($user->email)->send(new WelcomeUserMail($user, $password));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Erreur d'envoi de mail de bienvenue à {$user->email} : " . $e->getMessage());
+        }
 
         return redirect()->route('admin.etudiants.index')->with('success', "Étudiant créé avec succès. Mot de passe provisoire : $password");
     }
