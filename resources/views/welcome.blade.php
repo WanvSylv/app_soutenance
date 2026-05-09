@@ -37,7 +37,7 @@
 
             .hero-section {
                 /* 🔧 FIX: background-attachment: fixed cause des bugs sur iOS/Android */
-                background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.6) 0%, rgba(2, 6, 23, 0.95) 100%), url('{{ asset('images/students_african.png') }}');
+                background-image: linear-gradient(to bottom, rgba(2, 6, 23, 0.6) 0%, rgba(2, 6, 23, 0.95) 100%), url('{{ asset('images/academic_success_bg.png') }}');
                 background-size: cover;
                 background-position: center;
                 background-attachment: scroll; /* ✅ scroll au lieu de fixed */

@@ -136,6 +136,38 @@
         box-shadow: 0 10px 20px rgba(45, 96, 255, 0.2);
     }
 
+    /* Custom Scrollbar for Sidebar */
+    #main-sidebar {
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* IE and Edge */
+    }
+
+    #main-sidebar::-webkit-scrollbar {
+        width: 5px;
+        display: none;
+    }
+
+    #main-sidebar:hover {
+        scrollbar-width: thin; /* Firefox */
+    }
+
+    #main-sidebar:hover::-webkit-scrollbar {
+        display: block;
+    }
+
+    #main-sidebar::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    #main-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+    }
+
+    #main-sidebar::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
     .nav-icon {
         display: flex;
         align-items: center;

@@ -50,7 +50,7 @@
             }
 
             .auth-bg {
-                background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('{{ asset('images/students_african.png') }}');
+                background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.9)), url('{{ asset('images/academic_success_bg.png') }}');
                 background-size: cover;
                 background-position: center;
                 background-attachment: fixed;

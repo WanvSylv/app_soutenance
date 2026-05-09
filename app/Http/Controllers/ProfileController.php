@@ -34,7 +34,7 @@ class ProfileController extends Controller
             if ($user->photo_path) {
                 Storage::disk('public')->delete($user->photo_path);
             }
-            $validated['photo_path'] = $request->file('photo')->store('profils', 'public');
+            $validated['photo_path'] = $request->file('photo')->store('photos/profiles', 'public');
         }
 
         $user->fill($validated);

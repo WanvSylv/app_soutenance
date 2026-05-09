@@ -42,8 +42,14 @@
                         <tr class="hover:bg-[#F4F7FE]/50 transition-colors">
                             <td class="py-6 px-8">
                                 <div class="flex items-center">
-                                    <div class="h-12 w-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black text-sm shadow-lg shadow-emerald-500/20 mr-4">
-                                        {{ substr($etudiant->user->prenom, 0, 1) }}{{ substr($etudiant->user->nom, 0, 1) }}
+                                    <div class="h-12 w-12 rounded-2xl overflow-hidden mr-4 shadow-lg shadow-emerald-500/20">
+                                        @if($etudiant->user->photo_path)
+                                            <img src="{{ asset('storage/' . $etudiant->user->photo_path) }}" alt="Photo" class="h-full w-full object-cover">
+                                        @else
+                                            <div class="h-full w-full bg-gradient-to-tr from-emerald-500 to-teal-600 flex items-center justify-center text-white font-black text-sm">
+                                                {{ substr($etudiant->user->prenom, 0, 1) }}{{ substr($etudiant->user->nom, 0, 1) }}
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="flex flex-col">
                                         <span class="font-black text-[#1B254B] mb-0.5">{{ $etudiant->user->nom }} {{ $etudiant->user->prenom }}</span>
