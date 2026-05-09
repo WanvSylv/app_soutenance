@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'HOREB ACADEMIC') }}</title>
+        <title>{{ config('app.name', 'HOREB ACADEMY') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -108,7 +108,7 @@
             <div class="z-10 w-full max-w-xl animate-slide-up">
                 <div class="text-center mb-10">
                     <a href="/" class="inline-block transition hover:scale-105 duration-300">
-                        <span class="text-4xl font-black gradient-text tracking-tighter">HOREB ACADEMIC</span>
+                        <span class="text-4xl font-black gradient-text tracking-tighter">HOREB ACADEMY</span>
                     </a>
                 </div>
 
@@ -123,7 +123,7 @@
 
                 <div class="mt-10 text-center">
                     <p class="text-slate-400 text-sm font-medium">
-                        &copy; 2026 HOREB ACADEMIC &bull; Propulsé par <span class="font-bold text-white">HOREB IP</span>
+                        &copy; 2026 HOREB ACADEMY &bull; Propulsé par <span class="font-bold text-white">HOREB IP</span>
                     </p>
                 </div>
             </div>
