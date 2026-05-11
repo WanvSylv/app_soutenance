@@ -57,9 +57,14 @@ class User extends Authenticatable
         return $this->role === 'super_admin';
     }
 
+    public function isResponsableAcademique()
+    {
+        return $this->role === 'responsable_academique';
+    }
+
     public function isAdmin()
     {
-        return $this->role === 'admin' || $this->role === 'super_admin';
+        return in_array($this->role, ['admin', 'super_admin', 'responsable_academique']);
     }
 
     public function isEnseignant()

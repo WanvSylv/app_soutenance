@@ -49,7 +49,7 @@
 
                     <div class="group">
                         <x-input-label for="prenom" :value="__('Prénoms')" />
-                        <x-text-input id="prenom" name="prenom" type="text" class="block w-full" value="{{ old('prenom', $etudiant->user->prenom) }}" required />
+                        <x-text-input id="prenom" name="prenom" type="text" class="block w-full" :value="old('prenom', $etudiant->user->prenom)" required />
                         <x-input-error class="mt-2" :messages="$errors->get('prenom')" />
                     </div>
                 </div>
@@ -57,13 +57,13 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="group">
                         <x-input-label for="email" :value="__('Adresse Email')" />
-                        <x-text-input id="email" name="email" type="email" class="block w-full" value="{{ old('email', $etudiant->user->email) }}" required />
+                        <x-text-input id="email" name="email" type="email" class="block w-full" :value="old('email', $etudiant->user->email)" required />
                         <x-input-error class="mt-2" :messages="$errors->get('email')" />
                     </div>
 
                     <div class="group">
                         <x-input-label for="telephone" :value="__('Téléphone')" />
-                        <x-text-input id="telephone" name="telephone" type="text" class="block w-full" value="{{ old('telephone', $etudiant->user->telephone) }}" />
+                        <x-text-input id="telephone" name="telephone" type="text" class="block w-full" :value="old('telephone', $etudiant->user->telephone)" />
                         <x-input-error class="mt-2" :messages="$errors->get('telephone')" />
                     </div>
                 </div>
@@ -93,13 +93,16 @@
                         <x-input-label for="filiere" :value="__('Filière / Spécialité')" />
                         <select id="filiere" name="filiere" class="block w-full select2-field" required>
                             <option value="">Sélectionnez une filière</option>
-                            <option value="Génie Logiciel" {{ old('filiere', $etudiant->filiere) == 'Génie Logiciel' ? 'selected' : '' }}>Génie Logiciel</option>
-                            <option value="Cybersécurité" {{ old('filiere', $etudiant->filiere) == 'Cybersécurité' ? 'selected' : '' }}>Cybersécurité</option>
-                            <option value="Réseaux et Télécommunications" {{ old('filiere', $etudiant->filiere) == 'Réseaux et Télécommunications' ? 'selected' : '' }}>Réseaux et Télécommunications</option>
-                            <option value="Intelligence Artificielle" {{ old('filiere', $etudiant->filiere) == 'Intelligence Artificielle' ? 'selected' : '' }}>Intelligence Artificielle</option>
-                            <option value="Data Science" {{ old('filiere', $etudiant->filiere) == 'Data Science' ? 'selected' : '' }}>Data Science</option>
-                            <option value="Informatique de Gestion" {{ old('filiere', $etudiant->filiere) == 'Informatique de Gestion' ? 'selected' : '' }}>Informatique de Gestion</option>
-                            <option value="Développement Web et Mobile" {{ old('filiere', $etudiant->filiere) == 'Développement Web et Mobile' ? 'selected' : '' }}>Développement Web et Mobile</option>
+                            @php
+                                $filieres = ['Génie Logiciel', 'Cybersécurité', 'Réseaux et Télécommunications', 'Intelligence Artificielle', 'Data Science', 'Informatique de Gestion', 'Développement Web et Mobile'];
+                                $currentFiliere = old('filiere', $etudiant->filiere);
+                            @endphp
+                            @foreach($filieres as $f)
+                                <option value="{{ $f }}" {{ $currentFiliere == $f ? 'selected' : '' }}>{{ $f }}</option>
+                            @endforeach
+                            @if(!in_array($currentFiliere, $filieres) && $currentFiliere)
+                                <option value="{{ $currentFiliere }}" selected>{{ $currentFiliere }}</option>
+                            @endif
                         </select>
                         <x-input-error class="mt-2" :messages="$errors->get('filiere')" />
                     </div>

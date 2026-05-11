@@ -281,7 +281,13 @@
 
             <div class="glass-card p-8">
                 <div class="flex items-center justify-between mb-8">
-                    <h3 class="text-xs font-black uppercase tracking-[0.2em] text-[#1B254B]">Planning des Soutenances – {{ now()->translatedFormat('F Y') }}</h3>
+                    <div class="flex items-center gap-4">
+                        <h3 class="text-xs font-black uppercase tracking-[0.2em] text-[#1B254B]">Planning des Soutenances – {{ now()->translatedFormat('F Y') }}</h3>
+                        <a href="{{ route('admin.export.planning.hebdo') }}" target="_blank" class="flex items-center gap-2 px-3 py-1.5 bg-rose-50 text-rose-600 rounded-xl hover:bg-rose-100 transition border border-rose-100 text-[10px] font-black uppercase tracking-widest">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                            Exporter PDF
+                        </a>
+                    </div>
                     <div class="flex items-center gap-2 bg-[#F4F7FE] p-1 rounded-xl">
                         <button class="p-1 hover:bg-white rounded-lg transition"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg></button>
                         <button class="px-4 py-1.5 bg-white text-xs font-black text-[#1B254B] rounded-lg shadow-sm">Aujourd'hui</button>

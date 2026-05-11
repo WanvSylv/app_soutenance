@@ -15,7 +15,16 @@ class Memoire extends Model
         'fichier_path',
         'taille_fichier_ko',
         'date_depot',
+        'statut',
+        'valide_at',
+        'valide_par',
+        'motif_rejet',
     ];
+
+    public function validator()
+    {
+        return $this->belongsTo(User::class, 'valide_par');
+    }
 
     public function etudiant()
     {

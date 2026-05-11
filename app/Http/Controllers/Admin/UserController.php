@@ -27,7 +27,7 @@ class UserController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'string', 'in:admin,enseignant,etudiant'],
+            'role' => ['required', 'string', 'in:admin,responsable_academique,enseignant,etudiant'],
             'telephone' => ['nullable', 'string', 'max:20'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
@@ -85,7 +85,7 @@ class UserController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users,email,'.$user->id],
-            'role' => ['required', 'string', 'in:admin,enseignant,etudiant'],
+            'role' => ['required', 'string', 'in:admin,responsable_academique,enseignant,etudiant'],
             'telephone' => ['nullable', 'string', 'max:20'],
             'actif' => ['boolean'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],

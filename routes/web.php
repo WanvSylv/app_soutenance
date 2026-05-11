@@ -14,7 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('planning', [\App\Http\Controllers\Admin\PlanificationController::class, 'index'])->name('planification.index');
 
     // Routes Admin
-    Route::middleware(['role:admin,super_admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::middleware(['role:admin,super_admin,responsable_academique'])->prefix('admin')->name('admin.')->group(function () {
         Route::resource('salles', \App\Http\Controllers\Admin\SalleController::class);
         Route::resource('enseignants', \App\Http\Controllers\Admin\EnseignantController::class);
         Route::resource('etudiants', \App\Http\Controllers\Admin\EtudiantController::class);
@@ -25,10 +25,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('quitus', [\App\Http\Controllers\Admin\QuitusController::class, 'index'])->name('quitus.index');
         Route::post('quitus/{etudiant}/valider', [\App\Http\Controllers\Admin\QuitusController::class, 'valider'])->name('quitus.valider');
 
+        // Mémoires
+        Route::get('memoires', [\App\Http\Controllers\Admin\MemoireController::class, 'index'])->name('memoires.index');
+        Route::post('memoires/{memoire}/valider', [\App\Http\Controllers\Admin\MemoireController::class, 'valider'])->name('memoires.valider');
+        Route::post('memoires/{memoire}/rejeter', [\App\Http\Controllers\Admin\MemoireController::class, 'rejeter'])->name('memoires.rejeter');
+        Route::get('memoires/{memoire}/download', [\App\Http\Controllers\Admin\MemoireController::class, 'download'])->name('memoires.download');
+
         // Planification (Admin Actions only)
         Route::resource('planification', \App\Http\Controllers\Admin\PlanificationController::class)->except(['index']);
         Route::post('planification/{planification}/annuler', [\App\Http\Controllers\Admin\PlanificationController::class, 'annuler'])->name('planification.annuler');
         Route::get('etudiants/{etudiant}/theme', [\App\Http\Controllers\Admin\PlanificationController::class, 'getStudentTheme'])->name('etudiants.theme');
+        
+        // Export PDF
+        Route::get('export/planning-hebdo', [\App\Http\Controllers\Admin\PlanificationPDFController::class, 'exportHebdo'])->name('export.planning.hebdo');
 
         // Paramètres globaux
         Route::get('parametres', [\App\Http\Controllers\Admin\ParametreController::class, 'index'])->name('parametres.index');

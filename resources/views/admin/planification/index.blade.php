@@ -73,16 +73,26 @@
                 </div>
             </div>
 
-            <!-- Right: CTA Button -->
-            @if(auth()->user()->isAdmin())
-            <a href="{{ route('admin.planification.create') }}"
-               class="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-2xl text-sm font-black shadow-lg shadow-blue-500/20 hover:scale-[1.02] hover:bg-blue-700 transition-all whitespace-nowrap">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-                </svg>
-                Nouvelle soutenance
-            </a>
-            @endif
+            <!-- Right: CTA Buttons -->
+            <div class="flex items-center gap-3">
+                <a href="{{ route('admin.export.planning.hebdo', ['date' => $start->format('Y-m-d')]) }}" target="_blank"
+                   class="inline-flex items-center justify-center gap-2 bg-rose-50 text-rose-600 px-6 py-3 rounded-2xl text-sm font-black border border-rose-100 shadow-lg shadow-rose-500/5 hover:bg-rose-100 transition-all whitespace-nowrap">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                    </svg>
+                    Exporter PDF
+                </a>
+
+                @if(auth()->user()->isAdmin())
+                <a href="{{ route('admin.planification.create') }}"
+                   class="inline-flex items-center justify-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-2xl text-sm font-black shadow-lg shadow-blue-500/20 hover:scale-[1.02] hover:bg-blue-700 transition-all whitespace-nowrap">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    Nouvelle soutenance
+                </a>
+                @endif
+            </div>
         </div>
     </form>
 

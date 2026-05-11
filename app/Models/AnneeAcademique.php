@@ -15,6 +15,12 @@ class AnneeAcademique extends Model
         'active',
     ];
 
+    protected $casts = [
+        'date_debut' => 'date',
+        'date_fin' => 'date',
+        'active' => 'boolean',
+    ];
+
     public function soutenances()
     {
         return $this->hasMany(Soutenance::class);

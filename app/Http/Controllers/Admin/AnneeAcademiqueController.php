@@ -30,11 +30,14 @@ class AnneeAcademiqueController extends Controller
         ]);
 
         DB::transaction(function () use ($request) {
-            if ($request->active) {
+            $data = $request->all();
+            $data['active'] = $request->has('active');
+
+            if ($data['active']) {
                 AnneeAcademique::where('active', true)->update(['active' => false]);
             }
 
-            AnneeAcademique::create($request->all());
+            AnneeAcademique::create($data);
         });
 
         return redirect()->route('admin.annees-academiques.index')->with('success', 'Année académique créée avec succès.');
@@ -58,11 +61,14 @@ class AnneeAcademiqueController extends Controller
         ]);
 
         DB::transaction(function () use ($request, $annee) {
-            if ($request->active && !$annee->active) {
+            $data = $request->all();
+            $data['active'] = $request->has('active');
+
+            if ($data['active'] && !$annee->active) {
                 AnneeAcademique::where('active', true)->update(['active' => false]);
             }
 
-            $annee->update($request->all());
+            $annee->update($data);
         });
 
         return redirect()->route('admin.annees-academiques.index')->with('success', 'Année académique mise à jour avec succès.');

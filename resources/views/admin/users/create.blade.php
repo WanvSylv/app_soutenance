@@ -61,6 +61,7 @@
                         <select id="role" name="role" class="mt-1 block w-full border-[#E0E5F2] bg-[#F4F7FE] text-[#1B254B] focus:border-[#2D60FF] focus:ring-[#2D60FF]/10 rounded-[1.25rem] shadow-sm transition-all duration-300 font-semibold" required>
                             <option value="">Sélectionner un rôle</option>
                             <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrateur</option>
+                            <option value="responsable_academique" {{ old('role') == 'responsable_academique' ? 'selected' : '' }}>Responsable Académique</option>
                             <option value="enseignant" {{ old('role') == 'enseignant' ? 'selected' : '' }}>Jury</option>
                             <option value="etudiant" {{ old('role') == 'etudiant' ? 'selected' : '' }}>Étudiant</option>
                         </select>

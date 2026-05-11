@@ -77,7 +77,7 @@
                             <x-input-label for="niveau" :value="__('Niveau d\'étude')" />
                             <select id="niveau" name="niveau" class="mt-1 block w-full border-[#E0E5F2] bg-[#F4F7FE] text-[#1B254B] focus:border-[#2D60FF] focus:ring-[#2D60FF]/10 rounded-[1.25rem] shadow-sm transition-all duration-300 font-semibold" required>
                                 <option value="">Choisir un niveau</option>
-                                <option value="Licence 3 (" {{ old('niveau') == 'Licence 3 (Bachelor)' ? 'selected' : '' }}>Licence 3</option>
+                                <option value="Licence 3 (Bachelor)" {{ old('niveau') == 'Licence 3 (Bachelor)' ? 'selected' : '' }}>Licence 3</option>
                                 <option value="Master 2" {{ old('niveau') == 'Master 2' ? 'selected' : '' }}>Master 2</option>
                                 <option value="Doctorat" {{ old('niveau') == 'Doctorat' ? 'selected' : '' }}>Doctorat</option>
                             </select>
