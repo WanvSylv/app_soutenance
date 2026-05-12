@@ -80,7 +80,7 @@
                 <!-- Top Header -->
                 <header style="height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 1.5rem;border-bottom:1px solid #E0E5F2;background:#fff;position:sticky;top:0;z-index:20;">
                     <div style="display:flex;align-items:center;gap:0.75rem;">
-                        <button onclick="toggleSidebar()" style="display:none;" class="md-hidden-toggle" id="sidebar-toggle">
+                        <button onclick="toggleSidebar()" class="md-hidden-toggle" id="sidebar-toggle">
                             <svg style="width:20px;height:20px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
                         </button>
                         <h1 style="font-size:0.8rem;font-weight:800;text-transform:uppercase;letter-spacing:0.12em;color:#A3AED0;margin:0;">@yield('header', 'Vue générale')</h1>
@@ -121,7 +121,8 @@
                     </div>
                 </header>
                 <style>
-                    @media (max-width: 767px) { .md-hidden-toggle { display:flex!important; align-items:center; padding:6px; background:#F4F7FE; border:1px solid #E0E5F2; border-radius:6px; color:#1B254B; cursor:pointer; } }
+                    .md-hidden-toggle { display:none; }
+                    @media (max-width: 767px) { .md-hidden-toggle { display:flex; align-items:center; padding:6px; background:#F4F7FE; border:1px solid #E0E5F2; border-radius:6px; color:#1B254B; cursor:pointer; } }
                     @media (min-width: 640px) { .sm-name { display:block!important; } }
                     @media (min-width: 1024px) { .lg-date { display:block!important; } }
                 </style>
