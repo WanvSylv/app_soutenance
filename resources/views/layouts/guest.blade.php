@@ -7,10 +7,10 @@
 
         <title>{{ config('app.name', 'HOREB ACADEMY') }}</title>
 
-        <!-- Fonts -->
+        <!-- Fonts : Montserrat — charte graphique unique -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
         <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -20,17 +20,18 @@
                 theme: {
                     extend: {
                         colors: {
-                            premium: {
-                                50: '#f0f9ff',
-                                100: '#e0f2fe',
-                                500: '#0ea5e9',
-                                600: '#0284c7',
-                                700: '#0369a1',
-                                900: '#0c4a6e',
-                            }
+                            brand: {
+                                50:  '#f0f4ff',
+                                100: '#e0eaff',
+                                500: '#2D60FF',
+                                600: '#1B4FE0',
+                                700: '#1B254B',
+                                800: '#162040',
+                                900: '#0f1630',
+                            },
                         },
                         fontFamily: {
-                            sans: ['Outfit', 'sans-serif'],
+                            sans: ['Montserrat', 'sans-serif'],
                         }
                     }
                 }
@@ -38,14 +39,9 @@
         </script>
 
         <style>
-            :root {
-                --primary: #2563eb;
-                --primary-dark: #1e40af;
-            }
-            
-            body { 
+            body {
                 margin: 0;
-                font-family: 'Outfit', sans-serif;
+                font-family: 'Montserrat', sans-serif;
                 background-color: #0f172a;
             }
 
@@ -65,33 +61,25 @@
             }
 
             .gradient-text {
-                background: linear-gradient(135deg, #60a5fa 0%, #2563eb 100%);
+                background: linear-gradient(135deg, #7EB4FF 0%, #2D60FF 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
+                background-clip: text;
             }
 
             .btn-premium {
-                background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+                background: #2D60FF;
                 color: white;
-                border-radius: 1rem;
+                border-radius: 0.75rem;
                 font-weight: 700;
-                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+                transition: all 0.25s ease;
+                box-shadow: 0 10px 20px rgba(45, 96, 255, 0.35);
             }
 
             .btn-premium:hover {
-                transform: translateY(-2px) scale(1.02);
-                filter: brightness(1.1);
-                box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.5);
-            }
-
-            @keyframes slideUp {
-                from { opacity: 0; transform: translateY(30px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-
-            .animate-slide-up {
-                animation: slideUp 0.6s ease-out forwards;
+                background: #1B4FE0;
+                transform: translateY(-2px);
+                box-shadow: 0 16px 28px rgba(45, 96, 255, 0.45);
             }
         </style>
 

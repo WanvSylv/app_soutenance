@@ -7,10 +7,10 @@
 
         <title>{{ config('app.name', 'HOREB ACADEMY') }}</title>
 
-        <!-- Fonts -->
+        <!-- Fonts : Montserrat — charte graphique unique -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 
         <!-- Tailwind CDN -->
         <script src="https://cdn.tailwindcss.com"></script>
@@ -21,17 +21,17 @@
                     extend: {
                         colors: {
                             brand: {
-                                50: '#f0f9ff',
-                                100: '#e0f2fe',
-                                500: '#3b82f6',
-                                600: '#2563eb',
-                                700: '#1d4ed8',
-                                800: '#1e40af',
-                                900: '#1e3a8a',
+                                50:  '#f0f4ff',
+                                100: '#e0eaff',
+                                500: '#2D60FF',
+                                600: '#1B4FE0',
+                                700: '#1B254B',
+                                800: '#162040',
+                                900: '#0f1630',
                             },
                         },
                         fontFamily: {
-                            sans: ['Outfit', 'sans-serif'],
+                            sans: ['Montserrat', 'sans-serif'],
                         }
                     }
                 }
@@ -39,138 +39,16 @@
         </script>
 
         <style>
-            :root {
-                --brand: #2D60FF;
-                --bg-main: #F4F7FE;
-                --surface: #FFFFFF;
-                --text-main: #1B254B;
-                --text-muted: #A3AED0;
-            }
-
             body {
-                background-color: var(--bg-main);
-                color: var(--text-main);
-                font-family: 'Outfit', sans-serif;
-            }
-
-            /* Premium Surface V3 (Light) */
-            .glass-card {
-                background: var(--surface);
-                border: 1px solid #E0E5F2;
-                box-shadow: 0px 4px 20px rgba(112, 144, 176, 0.08);
-                border-radius: 1rem;
-                transition: all 0.3s ease;
-            }
-
-            .glass-card:hover {
-                box-shadow: 0px 10px 30px rgba(112, 144, 176, 0.12);
-            }
-
-            /* Vibrant Buttons */
-            .btn-premium {
-                background: var(--brand);
-                color: white;
-                padding: 1rem 2.5rem;
-                border-radius: 1.25rem;
-                font-weight: 800;
-                display: inline-flex;
-                align-items: center;
-                gap: 0.75rem;
-                transition: all 0.3s ease;
-                border: none;
-                box-shadow: 0px 10px 20px rgba(45, 96, 255, 0.2);
-            }
-
-            .btn-premium:hover {
-                transform: translateY(-2px);
-                filter: brightness(1.1);
-                box-shadow: 0px 15px 30px rgba(45, 96, 255, 0.3);
-            }
-
-            /* Typography */
-            .gradient-text {
-                background: linear-gradient(135deg, #2D60FF 0%, #8A2BE2 100%);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
-
-            /* Inputs */
-            input, select, textarea {
-                background: #F4F7FE !important;
-                border: 1px solid #E0E5F2 !important;
-                border-radius: 1.25rem !important;
-                color: #1B254B !important;
-                padding: 0.9rem 1.2rem !important;
-                transition: all 0.3s ease !important;
-                font-weight: 600 !important;
-            }
-
-            @media (min-width: 768px) {
-                input, select, textarea {
-                    padding: 1.2rem 1.5rem !important;
-                }
-            }
-
-            input:focus {
-                border-color: var(--brand) !important;
-                box-shadow: 0 0 0 4px rgba(45, 96, 255, 0.1) !important;
-                background: #FFFFFF !important;
-            }
-
-            input::placeholder {
-                color: #A3AED0 !important;
-                font-weight: 400 !important;
-            }
-
-            /* Table Styles */
-            .premium-table {
-                min-width: 600px;
-            }
-
-            .premium-table th {
-                color: #A3AED0;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 0.1em;
-                font-size: 0.75rem;
-            }
-
-            .premium-table tr {
-                background: transparent;
-                transition: all 0.2s;
-            }
-
-            .premium-table tr:hover {
-                background: #F4F7FE;
-            }
-
-            /* Mobile responsive table cells */
-            @media (max-width: 768px) {
-                .premium-table th,
-                .premium-table td {
-                    padding-left: 1rem !important;
-                    padding-right: 1rem !important;
-                    padding-top: 0.875rem !important;
-                    padding-bottom: 0.875rem !important;
-                }
+                font-family: 'Montserrat', sans-serif;
             }
 
             /* Mobile btn-premium */
             @media (max-width: 640px) {
-                .btn-premium {
-                    width: 100%;
-                    justify-content: center;
-                }
+                .btn-premium { width: 100%; justify-content: center; }
             }
 
-            /* Animations */
-            @keyframes fadeIn {
-                from { opacity: 0; transform: translateY(15px); }
-                to { opacity: 1; transform: translateY(0); }
-            }
-            .animate-fade-in { animation: fadeIn 0.6s ease-out forwards; }
-
-            /* Smooth horizontal scroll for planning grid on touch devices */
+            /* Smooth horizontal scroll */
             .scroll-smooth { scroll-behavior: smooth; }
         </style>
 
