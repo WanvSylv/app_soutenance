@@ -160,7 +160,7 @@
                                         @endphp
                                         <div class="absolute {{ $topClass }} left-2 right-2 p-3 {{ $colorClass }} border rounded-xl shadow-sm z-10 cursor-pointer hover:scale-[1.03] transition-all group">
                                             <p class="text-[8px] font-black opacity-70">{{ $soutenance->date_heure_debut->format('H:i') }} - {{ $soutenance->date_heure_debut->addMinutes(90)->format('H:i') }}</p>
-                                            <p class="text-[10px] font-black text-[#1B254B] mt-1 uppercase">{{ $soutenance->etudiant->user->nom }}</p>
+                                            <p class="text-[10px] font-black text-[#1B254B] mt-1 uppercase">{{ $soutenance->etudiant?->user?->nom ?? 'ÉTUDIANT SUPPRIMÉ' }}</p>
                                             <p class="text-[8px] font-bold text-[#A3AED0] mt-0.5 truncate">{{ $soutenance->sujet }}</p>
                                             
                                             <div class="hidden group-hover:block absolute top-full left-0 right-0 mt-2 p-4 bg-white shadow-2xl rounded-2xl border border-[#F4F7FE] z-50 min-w-[200px]">
@@ -168,7 +168,7 @@
                                                 @foreach($soutenance->juryMembres as $membre)
                                                     <div class="flex items-center justify-between mb-2 last:mb-0">
                                                         <div class="flex flex-col">
-                                                            <p class="text-[10px] font-bold text-[#1B254B]">{{ $membre->enseignant->user->nom }} {{ $membre->enseignant->user->prenom }}</p>
+                                                            <p class="text-[10px] font-bold text-[#1B254B]">{{ $membre->enseignant?->user?->nom ?? 'Jury' }} {{ $membre->enseignant?->user?->prenom ?? 'Supprimé' }}</p>
                                                             <p class="text-[8px] text-[#A3AED0] uppercase">{{ $membre->fonction }}</p>
                                                         </div>
                                                         @php
@@ -224,10 +224,10 @@
                                 </div>
                                 <div>
                                     <p class="text-[10px] font-black text-blue-700 uppercase tracking-widest">{{ $nextSoutenance->date_heure_debut->translatedFormat('d F Y') }}</p>
-                                    <p class="text-[9px] font-bold text-blue-500 uppercase">{{ $nextSoutenance->date_heure_debut->format('H:i') }} — {{ $nextSoutenance->salle->nom }} [{{ $nextSoutenance->salle->code }}]</p>
+                                    <p class="text-[9px] font-bold text-blue-500 uppercase">{{ $nextSoutenance->date_heure_debut->format('H:i') }} — {{ $nextSoutenance->salle?->nom ?? 'Salle N/A' }} [{{ $nextSoutenance->salle?->code ?? '?' }}]</p>
                                 </div>
                             </div>
-                            <h4 class="text-xs font-black text-[#1B254B] uppercase mb-1">{{ $nextSoutenance->etudiant->user->nom }} {{ $nextSoutenance->etudiant->user->prenom }}</h4>
+                            <h4 class="text-xs font-black text-[#1B254B] uppercase mb-1">{{ $nextSoutenance->etudiant?->user?->nom ?? 'Utilisateur' }} {{ $nextSoutenance->etudiant?->user?->prenom ?? 'Supprimé' }}</h4>
                             <p class="text-[10px] font-bold text-[#A3AED0] italic line-clamp-2 leading-relaxed">"{{ $nextSoutenance->sujet }}"</p>
                         </div>
 
@@ -236,8 +236,8 @@
                                 <p class="text-[9px] font-black text-[#1B254B] uppercase tracking-widest mb-3">Membres du Jury :</p>
                                 <div class="space-y-2">
                                     @foreach($nextSoutenance->juryMembres as $membre)
-                                        <div class="flex items-center justify-between p-2 rounded-xl {{ $membre->enseignant_id == $availableJury->id ? 'bg-blue-600 text-white' : 'bg-[#F4F7FE] text-[#1B254B]' }}">
-                                            <span class="text-[10px] font-bold">{{ $membre->enseignant->user->nom }} {{ $membre->enseignant->user->prenom }}</span>
+                                        <div class="flex items-center justify-between p-2 rounded-xl {{ $membre->enseignant_id == $availableJury?->id ? 'bg-blue-600 text-white' : 'bg-[#F4F7FE] text-[#1B254B]' }}">
+                                            <span class="text-[10px] font-bold">{{ $membre->enseignant?->user?->nom ?? 'Jury' }} {{ $membre->enseignant?->user?->prenom ?? 'Supprimé' }}</span>
                                             <span class="text-[8px] font-black uppercase opacity-70">{{ $membre->fonction }}</span>
                                         </div>
                                     @endforeach
@@ -263,16 +263,16 @@
                     @if($availableJury)
                     <div class="flex flex-col items-center">
                         <div class="h-28 w-28 rounded-2xl overflow-hidden mb-6 ring-4 ring-blue-50 shadow-lg">
-                            @if($availableJury->user->photo_path)
+                            @if($availableJury?->user?->photo_path)
                                 <img src="{{ asset('storage/'.$availableJury->user->photo_path) }}" alt="Jury" class="h-full w-full object-cover">
                             @else
                                 <div class="h-full w-full bg-[#2D60FF] flex items-center justify-center text-white font-black text-3xl uppercase">
-                                    {{ substr($availableJury->user->nom, 0, 1) }}{{ substr($availableJury->user->prenom, 0, 1) }}
+                                    {{ substr($availableJury?->user?->nom ?? 'J', 0, 1) }}{{ substr($availableJury?->user?->prenom ?? 'U', 0, 1) }}
                                 </div>
                             @endif
                         </div>
-                        <h4 class="text-sm font-black text-[#1B254B] text-center">{{ $availableJury->user->nom }} {{ $availableJury->user->prenom }}</h4>
-                        <p class="text-[10px] font-bold text-[#A3AED0] mt-1 uppercase tracking-widest">{{ $availableJury->grade ?? 'Professeur Titulaire' }}</p>
+                        <h4 class="text-sm font-black text-[#1B254B] text-center">{{ $availableJury?->user?->nom ?? 'Jury' }} {{ $availableJury?->user?->prenom ?? 'Inconnu' }}</h4>
+                        <p class="text-[10px] font-bold text-[#A3AED0] mt-1 uppercase tracking-widest">{{ $availableJury?->grade ?? 'Grade non défini' }}</p>
                     </div>
 
                     <div class="mt-8 space-y-4">

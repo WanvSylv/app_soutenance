@@ -40,16 +40,16 @@
                             <td class="py-6 px-8">
                                 <div class="flex items-center">
                                     <div class="h-12 w-12 rounded-2xl overflow-hidden mr-4 shadow-lg shadow-blue-500/20">
-                                        @if($enseignant->user->photo_path)
+                                        @if($enseignant->user?->photo_path)
                                             <img src="{{ asset('storage/' . $enseignant->user->photo_path) }}" alt="Photo" class="h-full w-full object-cover">
                                         @else
                                             <div class="h-full w-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white font-black text-sm">
-                                                {{ substr($enseignant->user->prenom, 0, 1) }}{{ substr($enseignant->user->nom, 0, 1) }}
+                                                {{ substr($enseignant->user?->prenom ?? 'E', 0, 1) }}{{ substr($enseignant->user?->nom ?? 'N', 0, 1) }}
                                             </div>
                                         @endif
                                     </div>
                                     <div class="flex flex-col">
-                                        <span class="font-black text-[#1B254B] mb-0.5">{{ $enseignant->user->nom }} {{ $enseignant->user->prenom }}</span>
+                                        <span class="font-black text-[#1B254B] mb-0.5">{{ $enseignant->user?->nom ?? 'Jury' }} {{ $enseignant->user?->prenom ?? 'Supprimé' }}</span>
                                         <span class="text-[10px] text-[#A3AED0] font-black uppercase tracking-widest">{{ $enseignant->departement ?? 'Département non défini' }}</span>
                                     </div>
                                 </div>
@@ -63,7 +63,7 @@
                                 <span class="text-sm font-bold text-[#1B254B]">{{ $enseignant->specialite }}</span>
                             </td>
                             <td class="py-6 px-8">
-                                <span class="text-sm font-medium text-[#A3AED0]">{{ $enseignant->user->email }}</span>
+                                <span class="text-sm font-medium text-[#A3AED0]">{{ $enseignant->user?->email ?? 'N/A' }}</span>
                             </td>
                             <td class="py-6 px-8 text-right">
                                 <div class="flex items-center justify-end space-x-3">

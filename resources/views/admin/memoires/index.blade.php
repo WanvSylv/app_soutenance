@@ -43,11 +43,11 @@
                                 <td class="p-6">
                                     <div class="flex items-center gap-4">
                                         <div class="h-10 w-10 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 font-black text-xs">
-                                            {{ substr($memoire->etudiant->user->nom, 0, 1) }}{{ substr($memoire->etudiant->user->prenom, 0, 1) }}
+                                            {{ substr($memoire->etudiant?->user?->nom ?? 'E', 0, 1) }}{{ substr($memoire->etudiant?->user?->prenom ?? 'T', 0, 1) }}
                                         </div>
                                         <div>
-                                            <p class="text-sm font-black text-[#1B254B]">{{ $memoire->etudiant->user->nom }} {{ $memoire->etudiant->user->prenom }}</p>
-                                            <p class="text-[10px] font-bold text-[#A3AED0] uppercase">{{ $memoire->etudiant->matricule }}</p>
+                                            <p class="text-sm font-black text-[#1B254B]">{{ $memoire->etudiant?->user?->nom ?? 'Étudiant' }} {{ $memoire->etudiant?->user?->prenom ?? 'Supprimé' }}</p>
+                                            <p class="text-[10px] font-bold text-[#A3AED0] uppercase">{{ $memoire->etudiant?->matricule ?? 'MATRICULE N/A' }}</p>
                                         </div>
                                     </div>
                                 </td>
@@ -56,7 +56,7 @@
                                         {{ $memoire->titre }}
                                     </p>
                                     <p class="text-[10px] font-medium text-[#A3AED0] mt-1 italic">
-                                        {{ $memoire->anneeAcademique->libelle }}
+                                        {{ $memoire->anneeAcademique?->libelle ?? 'Année N/A' }}
                                     </p>
                                 </td>
                                 <td class="p-6">
@@ -94,7 +94,7 @@
                                                 </button>
                                             </form>
                                             <button type="button" 
-                                                    onclick="openRejetModal({{ $memoire->id }}, '{{ addslashes($memoire->etudiant->user->nom) }}')"
+                                                    onclick="openRejetModal({{ $memoire->id }}, '{{ addslashes($memoire->etudiant?->user?->nom ?? 'Étudiant Supprimé') }}')"
                                                     class="p-2 text-rose-600 hover:bg-rose-50 rounded-lg transition" title="Rejeter">
                                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                                             </button>

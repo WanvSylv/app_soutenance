@@ -115,7 +115,7 @@
                                     <span class="text-[10px] font-black text-blue-700">{{ $soutenance->date_heure_debut->format('H:i') }}</span>
                                 </div>
                                 <div class="flex-grow min-w-0">
-                                    <h4 class="text-xs font-black text-[#1B254B] uppercase truncate">{{ $soutenance->etudiant->user->nom }} {{ $soutenance->etudiant->user->prenom }}</h4>
+                                    <h4 class="text-xs font-black text-[#1B254B] uppercase truncate">{{ $soutenance->etudiant?->user?->nom ?? 'Étudiant' }} {{ $soutenance->etudiant?->user?->prenom ?? 'Supprimé' }}</h4>
                                     <p class="text-[9px] font-bold text-[#A3AED0] mt-1 truncate">{{ $soutenance->sujet }}</p>
                                     <div class="flex items-center gap-2 mt-2">
                                         <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">{{ $soutenance->salle->nom }}</span>
@@ -140,20 +140,20 @@
                 <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-[#1B254B] mb-6">Jury Disponible aujourd'hui</h3>
                 <div class="flex items-center gap-5">
                     <div class="h-16 w-16 rounded-2xl bg-[#F4F7FE] overflow-hidden shrink-0 border border-[#E0E5F2]">
-                        @if($availableJury->user->photo_path)
+                        @if($availableJury?->user?->photo_path)
                             <img src="{{ asset('storage/' . $availableJury->user->photo_path) }}" alt="Jury" class="h-full w-full object-cover">
                         @else
                             <div class="h-full w-full bg-[#2D60FF] flex items-center justify-center text-white font-black text-xl uppercase">
-                                {{ substr($availableJury->user->nom, 0, 1) }}{{ substr($availableJury->user->prenom, 0, 1) }}
+                                {{ substr($availableJury?->user?->nom ?? 'J', 0, 1) }}{{ substr($availableJury?->user?->prenom ?? 'U', 0, 1) }}
                             </div>
                         @endif
                     </div>
                     <div class="flex-grow">
                         <div class="flex items-center justify-between">
-                            <h4 class="text-xs font-black text-[#1B254B]">{{ $availableJury->user->nom }} {{ $availableJury->user->prenom }}</h4>
+                            <h4 class="text-xs font-black text-[#1B254B]">{{ $availableJury?->user?->nom ?? 'Jury' }} {{ $availableJury?->user?->prenom ?? 'Inconnu' }}</h4>
                             <div class="px-2 py-0.5 bg-green-50 text-green-600 text-[8px] font-black rounded uppercase">Disponible</div>
                         </div>
-                        <p class="text-[9px] font-bold text-[#A3AED0] mt-0.5">{{ $availableJury->grade ?? 'Professeur' }}</p>
+                        <p class="text-[9px] font-bold text-[#A3AED0] mt-0.5">{{ $availableJury?->grade ?? 'Professeur' }}</p>
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-[#F4F7FE] space-y-2">
@@ -218,11 +218,11 @@
                     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <div class="h-10 w-10 rounded-xl bg-rose-100 flex items-center justify-center text-rose-600 font-black text-xs uppercase">
-                                {{ substr($indispo->enseignant->user->nom, 0, 1) }}
+                                {{ substr($indispo->enseignant?->user?->nom ?? 'J', 0, 1) }}
                             </div>
                             <div>
-                                <h4 class="text-xs font-black text-[#1B254B] uppercase">{{ $indispo->enseignant->user->nom }} {{ $indispo->enseignant->user->prenom }}</h4>
-                                <p class="text-[9px] font-bold text-rose-500 mt-1 uppercase tracking-tighter">Soutenance de : {{ $indispo->soutenance->etudiant->user->nom }} ({{ $indispo->soutenance->date_heure_debut->format('d/m/Y H:i') }})</p>
+                                <h4 class="text-xs font-black text-[#1B254B] uppercase">{{ $indispo->enseignant?->user?->nom ?? 'Jury' }} {{ $indispo->enseignant?->user?->prenom ?? 'Supprimé' }}</h4>
+                                <p class="text-[9px] font-bold text-rose-500 mt-1 uppercase tracking-tighter">Soutenance de : {{ $indispo->soutenance?->etudiant?->user?->nom ?? 'Étudiant' }} ({{ $indispo->soutenance?->date_heure_debut?->format('d/m/Y H:i') ?? 'N/A' }})</p>
                                 <p class="text-[10px] text-[#A3AED0] mt-2 italic">"{{ $indispo->motif_indisponibilite }}"</p>
                             </div>
                         </div>
@@ -254,12 +254,13 @@
                     <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
                             <div class="h-10 w-10 rounded-xl bg-amber-100 flex items-center justify-center text-amber-600 font-black text-xs uppercase">
-                                {{ substr($expiree->etudiant->user->nom, 0, 1) }}
+                                {{ substr($expiree->etudiant?->user?->nom ?? 'E', 0, 1) }}
                             </div>
                             <div>
-                                <h4 class="text-xs font-black text-[#1B254B] uppercase">{{ $expiree->etudiant->user->nom }} {{ $expiree->etudiant->user->prenom }}</h4>
-                                <p class="text-[9px] font-bold text-amber-600 mt-1 uppercase tracking-tighter">Était prévue le : {{ $expiree->date_heure_debut->format('d/m/Y') }} à {{ $expiree->date_heure_debut->format('H:i') }}</p>
-                                <p class="text-[10px] text-[#A3AED0] mt-2 italic">Salle : {{ $expiree->salle->nom }}</p>
+                                <h4 class="text-xs font-black text-[#1B254B] uppercase">{{ $expiree->etudiant?->user?->nom ?? 'Étudiant' }} {{ $expiree->etudiant?->user?->prenom ?? 'Supprimé' }}</h4>
+                                <p class="text-[9px] font-bold text-amber-600 mt-1 uppercase tracking-tighter">Était prévue le : {{ $expiree->date_heure_debut?->format('d/m/Y') ?? 'N/A' }} à {{ $expiree->date_heure_debut?->format('H:i') ?? 'N/A' }}</p>
+                                <p class="text-[10px] text-[#A3AED0] mt-2 italic">Salle : {{ $expiree->salle?->nom ?? 'Salle N/A' }}</p>
+                            </div>
                             </div>
                         </div>
                         <div class="flex gap-2">
@@ -336,7 +337,7 @@
                                             @endphp
                                             <div class="{{ $colorClass }} border p-2 rounded-lg shadow-sm mb-1">
                                                 <p class="text-[6px] font-black opacity-70">{{ $soutenance->date_heure_debut->format('H:i') }}</p>
-                                                <p class="text-[8px] font-black text-[#1B254B] mt-0.5 uppercase truncate">{{ $soutenance->etudiant->user->nom }}</p>
+                                                <p class="text-[8px] font-black text-[#1B254B] mt-0.5 uppercase truncate">{{ $soutenance->etudiant?->user?->nom ?? 'Étudiant Supprimé' }}</p>
                                             </div>
                                         @endforeach
                                     </td>

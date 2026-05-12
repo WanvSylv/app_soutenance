@@ -102,7 +102,7 @@
         @endif
     </div>
     
-    <div class="p-8">
+    <div class="p-8 pb-20 md:pb-8">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn w-full">
