@@ -154,22 +154,31 @@
         @yield('scripts')
         <script>
             function toggleSidebar() {
-                const sidebar = document.getElementById('main-sidebar');
+                const sidebar  = document.getElementById('main-sidebar');
                 const backdrop = document.getElementById('sidebar-backdrop');
-                
-                if (sidebar.classList.contains('-translate-x-full')) {
-                    // Open
-                    sidebar.classList.remove('-translate-x-full');
-                    backdrop.classList.remove('hidden');
-                    // timeout to allow display:block to apply before opacity transition
-                    setTimeout(() => backdrop.classList.remove('opacity-0'), 10);
+                const isOpen   = sidebar.classList.contains('sidebar-open');
+
+                if (isOpen) {
+                    sidebar.classList.remove('sidebar-open');
+                    backdrop.style.opacity = '0';
+                    setTimeout(() => { backdrop.style.display = 'none'; }, 300);
                 } else {
-                    // Close
-                    sidebar.classList.add('-translate-x-full');
-                    backdrop.classList.add('opacity-0');
-                    setTimeout(() => backdrop.classList.add('hidden'), 300); // Wait for transition
+                    sidebar.classList.add('sidebar-open');
+                    backdrop.style.display = 'block';
+                    setTimeout(() => { backdrop.style.opacity = '1'; }, 10);
                 }
             }
+
+            // Fermer si clic sur le backdrop
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('sidebar-backdrop').addEventListener('click', toggleSidebar);
+            });
         </script>
+        <style>
+            @media (max-width: 767px) {
+                aside#main-sidebar.sidebar-open { transform: translateX(0) !important; }
+                #sidebar-backdrop { display:none;position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:40;opacity:0;transition:opacity 0.3s; }
+            }
+        </style>
     </body>
 </html>
