@@ -1,64 +1,66 @@
 <x-app-layout>
-    @section('header', 'Modifier la Salle')
+@section('header', 'Modifier la salle')
 
-    <div class="max-w-2xl mx-auto">
-        <div class="mb-6">
-            <a href="{{ route('admin.salles.index') }}" class="text-sm text-blue-500 hover:underline flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Retour à la liste
-            </a>
+<a href="{{ route('admin.salles.index') }}" class="form-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Retour à la liste
+</a>
+
+<div class="form-card">
+    <form action="{{ route('admin.salles.update', $salle) }}" method="POST">
+        @csrf @method('PATCH')
+
+        <div class="form-section-title">Identification</div>
+        <div class="form-grid">
+            <div class="form-field">
+                <label class="form-label" for="code">Code</label>
+                <input id="code" name="code" type="text" class="form-input" value="{{ old('code', $salle->code) }}" required>
+                <x-input-error :messages="$errors->get('code')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="nom">Désignation</label>
+                <input id="nom" name="nom" type="text" class="form-input" value="{{ old('nom', $salle->nom) }}" required>
+                <x-input-error :messages="$errors->get('nom')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="capacite">Capacité (places)</label>
+                <input id="capacite" name="capacite" type="number" class="form-input" value="{{ old('capacite', $salle->capacite) }}" min="1">
+                <x-input-error :messages="$errors->get('capacite')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="localisation">Localisation</label>
+                <input id="localisation" name="localisation" type="text" class="form-input" value="{{ old('localisation', $salle->localisation) }}">
+                <x-input-error :messages="$errors->get('localisation')" />
+            </div>
         </div>
 
-        <div class="glass-card p-8">
-            <form action="{{ route('admin.salles.update', $salle) }}" method="POST" class="space-y-6">
-                @csrf
-                @method('PATCH')
+        <div class="form-section">
+            <div class="form-field" style="margin-bottom:1.25rem;">
+                <label class="form-label" for="equipements">Équipements</label>
+                <textarea id="equipements" name="equipements" rows="3" class="form-input" style="resize:vertical;">{{ old('equipements', $salle->equipements) }}</textarea>
+                <x-input-error :messages="$errors->get('equipements')" />
+            </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <x-input-label for="code" :value="__('Code de la salle')" />
-                        <x-text-input id="code" name="code" type="text" class="mt-1 block w-full" :value="old('code', $salle->code)" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="nom" :value="__('Nom complet')" />
-                        <x-text-input id="nom" name="nom" type="text" class="mt-1 block w-full" :value="old('nom', $salle->nom)" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('nom')" />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <x-input-label for="capacite" :value="__('Capacité (personnes)')" />
-                        <x-text-input id="capacite" name="capacite" type="number" class="mt-1 block w-full" :value="old('capacite', $salle->capacite)" min="1" />
-                        <x-input-error class="mt-2" :messages="$errors->get('capacite')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="localisation" :value="__('Localisation / Bâtiment')" />
-                        <x-text-input id="localisation" name="localisation" type="text" class="mt-1 block w-full" :value="old('localisation', $salle->localisation)" />
-                        <x-input-error class="mt-2" :messages="$errors->get('localisation')" />
-                    </div>
-                </div>
-
+            <div class="toggle-row">
                 <div>
-                    <x-input-label for="equipements" :value="__('Équipements')" />
-                    <textarea id="equipements" name="equipements" rows="3" class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('equipements', $salle->equipements) }}</textarea>
-                    <x-input-error class="mt-2" :messages="$errors->get('equipements')" />
+                    <div class="toggle-label">Salle disponible</div>
+                    <div class="toggle-sub">Décocher pour indiquer une salle en maintenance.</div>
                 </div>
-
-                <div class="flex items-center space-x-2 mt-4">
-                    <input type="checkbox" id="disponible" name="disponible" value="1" {{ $salle->disponible ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500">
-                    <x-input-label for="disponible" :value="__('Salle disponible pour les soutenances')" />
-                </div>
-
-                <div class="flex justify-end pt-4">
-                    <button type="submit" class="btn-premium px-8">
-                        Mettre à jour
-                    </button>
-                </div>
-            </form>
+                <label style="position:relative;display:inline-flex;align-items:center;cursor:pointer;">
+                    <input type="hidden" name="disponible" value="0">
+                    <input type="checkbox" name="disponible" value="1" class="sr-only peer" {{ old('disponible', $salle->disponible) ? 'checked' : '' }}>
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2D60FF]"></div>
+                </label>
+            </div>
         </div>
-    </div>
+
+        <div class="form-actions">
+            <a href="{{ route('admin.salles.index') }}" class="btn-outline">Annuler</a>
+            <button type="submit" class="btn-premium">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+@include('admin._form-styles')
+@include('admin._table-styles')
 </x-app-layout>

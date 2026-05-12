@@ -1,59 +1,60 @@
 <x-app-layout>
-    @section('header', 'Nouveau Critère d\'Évaluation')
+@section('header', 'Nouveau critère')
 
-    <div class="max-w-2xl mx-auto animate-fade-in">
-        <div class="mb-8">
-            <a href="{{ route('admin.criteres.index') }}" class="inline-flex items-center text-sm font-bold text-blue-500 hover:text-blue-400 transition">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Retour à la liste des critères
-            </a>
+<a href="{{ route('admin.criteres.index') }}" class="form-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Retour à la liste
+</a>
+
+<div class="form-card">
+    <form action="{{ route('admin.criteres.store') }}" method="POST">
+        @csrf
+
+        <div class="form-section-title">Définition</div>
+        <div class="form-field" style="margin-bottom:1.25rem;">
+            <label class="form-label" for="libelle">Libellé du critère</label>
+            <input id="libelle" name="libelle" type="text" class="form-input" value="{{ old('libelle') }}" placeholder="Ex : Qualité de la présentation orale" required>
+            <x-input-error :messages="$errors->get('libelle')" />
         </div>
 
-        <div class="glass-card p-10">
-            <form action="{{ route('admin.criteres.store') }}" method="POST" class="space-y-8">
-                @csrf
-
-                <div class="group">
-                    <x-input-label for="libelle" :value="__('Libellé du critère')" />
-                    <x-text-input id="libelle" name="libelle" type="text" class="block w-full" :value="old('libelle')" required placeholder="Ex: Qualité de la présentation orale" />
-                    <x-input-error class="mt-2" :messages="$errors->get('libelle')" />
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="group">
-                        <x-input-label for="coefficient" :value="__('Coefficient')" />
-                        <x-text-input id="coefficient" name="coefficient" type="number" step="0.1" class="block w-full" :value="old('coefficient', 1.0)" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('coefficient')" />
-                    </div>
-
-                    <div class="group">
-                        <x-input-label for="ordre" :value="__('Ordre d\'affichage')" />
-                        <x-text-input id="ordre" name="ordre" type="number" class="block w-full" :value="old('ordre', 1)" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('ordre')" />
-                    </div>
-                </div>
-
-                <div class="group">
-                    <x-input-label for="description" :value="__('Description (optionnel)')" />
-                    <textarea id="description" name="description" rows="3" class="mt-1 block w-full border-[#E0E5F2] bg-[#F4F7FE] text-[#1B254B] focus:border-[#2D60FF] focus:ring-[#2D60FF]/10 rounded-[1.25rem] shadow-sm transition-all duration-300 font-semibold" placeholder="Précisez ce qui est évalué ici...">{{ old('description') }}</textarea>
-                    <x-input-error class="mt-2" :messages="$errors->get('description')" />
-                </div>
-
-                <div class="flex items-center justify-between pt-6 border-t border-[#F4F7FE]">
-                    <label class="flex items-center space-x-4 cursor-pointer">
-                        <input type="hidden" name="actif" value="0">
-                        <input type="checkbox" id="actif" name="actif" value="1" {{ old('actif', true) ? 'checked' : '' }}
-                            class="w-5 h-5 rounded-lg border-[#E0E5F2] text-[#2D60FF] focus:ring-[#2D60FF]/20">
-                        <div>
-                            <span class="font-black text-[#1B254B] text-sm">Critère actif</span>
-                            <p class="text-xs text-[#A3AED0] mt-0.5">Les critères inactifs ne sont pas utilisés lors des évaluations.</p>
-                        </div>
-                    </label>
-                    <button type="submit" class="btn-premium px-12">
-                        Enregistrer le critère
-                    </button>
-                </div>
-            </form>
+        <div class="form-grid">
+            <div class="form-field">
+                <label class="form-label" for="coefficient">Coefficient</label>
+                <input id="coefficient" name="coefficient" type="number" step="0.1" min="0.1" class="form-input" value="{{ old('coefficient', 1.0) }}" required>
+                <x-input-error :messages="$errors->get('coefficient')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="ordre">Ordre d'affichage</label>
+                <input id="ordre" name="ordre" type="number" min="1" class="form-input" value="{{ old('ordre', 1) }}" required>
+                <x-input-error :messages="$errors->get('ordre')" />
+            </div>
         </div>
-    </div>
+
+        <div class="form-section">
+            <div class="form-field">
+                <label class="form-label" for="description">Description <span style="font-weight:400;text-transform:none;">(optionnel)</span></label>
+                <textarea id="description" name="description" rows="3" class="form-input" placeholder="Précisez ce qui est évalué…" style="resize:vertical;">{{ old('description') }}</textarea>
+                <x-input-error :messages="$errors->get('description')" />
+            </div>
+        </div>
+
+        <div class="form-actions" style="justify-content:space-between;">
+            <label style="display:inline-flex;align-items:center;gap:0.6rem;cursor:pointer;">
+                <input type="hidden" name="actif" value="0">
+                <input type="checkbox" id="actif" name="actif" value="1" {{ old('actif', true) ? 'checked' : '' }} style="width:16px;height:16px;border-radius:4px;accent-color:#2D60FF;cursor:pointer;">
+                <div>
+                    <span style="font-size:0.8rem;font-weight:700;color:#1B254B;">Critère actif</span>
+                    <div style="font-size:0.7rem;color:#A3AED0;">Les critères inactifs ne sont pas utilisés lors des évaluations.</div>
+                </div>
+            </label>
+            <div style="display:flex;gap:0.75rem;">
+                <a href="{{ route('admin.criteres.index') }}" class="btn-outline">Annuler</a>
+                <button type="submit" class="btn-premium">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+@include('admin._form-styles')
+@include('admin._table-styles')
 </x-app-layout>

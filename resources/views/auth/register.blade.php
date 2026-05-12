@@ -1,96 +1,91 @@
 <x-guest-layout>
-    <div class="text-center mb-8">
-        <h2 class="text-3xl font-extrabold text-white tracking-tight mb-3">Inscription</h2>
-        <div class="h-1.5 w-16 bg-blue-500 mx-auto rounded-full"></div>
-        <p class="text-slate-400 mt-4 font-medium">Rejoignez la promotion 2026</p>
+
+    <div style="margin-bottom:2rem;">
+        <p style="font-size:0.7rem;font-weight:800;text-transform:uppercase;letter-spacing:0.2em;color:#2D60FF;margin:0 0 0.5rem;">Inscription</p>
+        <h1 style="font-size:1.5rem;font-weight:900;color:#1B254B;letter-spacing:-0.03em;margin:0 0 0.4rem;line-height:1.1;">Créer un compte</h1>
+        <p style="font-size:0.825rem;font-weight:500;color:#A3AED0;margin:0;">Rejoignez la promotion 2026</p>
     </div>
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-5">
+    <form method="POST" action="{{ route('register') }}" style="display:flex;flex-direction:column;gap:1rem;">
         @csrf
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Nom -->
-            <div class="group">
-                <x-input-label for="nom" :value="__('Nom')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <input id="nom" type="text" name="nom" :value="old('nom')" required autofocus class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="Ex: TRAORE">
-                <x-input-error :messages="$errors->get('nom')" class="mt-2" />
-            </div>
-
-            <!-- Prénom -->
-            <div class="group">
-                <x-input-label for="prenom" :value="__('Prénom')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <input id="prenom" type="text" name="prenom" :value="old('prenom')" required class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="Ex: Moussa">
-                <x-input-error :messages="$errors->get('prenom')" class="mt-2" />
-            </div>
-        </div>
-
-        <!-- Email -->
-        <div class="group">
-            <x-input-label for="email" :value="__('Adresse Email')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+                <label class="auth-label" for="nom">Nom</label>
+                <div class="input-wrap">
+                    <input id="nom" name="nom" type="text" class="auth-input" value="{{ old('nom') }}" placeholder="AGBOSSOU" required autofocus>
                 </div>
-                <input id="email" type="email" name="email" :value="old('email')" required class="block w-full pl-12 pr-4 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="exemple@horebip.com">
+                <x-input-error :messages="$errors->get('nom')" />
             </div>
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+            <div>
+                <label class="auth-label" for="prenom">Prénom</label>
+                <div class="input-wrap">
+                    <input id="prenom" name="prenom" type="text" class="auth-input" value="{{ old('prenom') }}" placeholder="Kévin" required>
+                </div>
+                <x-input-error :messages="$errors->get('prenom')" />
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Matricule -->
-            <div class="group">
-                <x-input-label for="matricule" :value="__('Matricule')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <input id="matricule" type="text" name="matricule" :value="old('matricule')" required class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="Ex: 2026IP001">
-                <x-input-error :messages="$errors->get('matricule')" class="mt-2" />
+        <div>
+            <label class="auth-label" for="email">Email</label>
+            <div class="input-wrap">
+                <span class="input-icon"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+                <input id="email" name="email" type="email" class="auth-input" value="{{ old('email') }}" placeholder="etudiant@universite.bj" required>
             </div>
+            <x-input-error :messages="$errors->get('email')" />
+        </div>
 
-            <!-- Niveau -->
-            <div class="group">
-                <x-input-label for="niveau" :value="__('Niveau d\'étude')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <select id="niveau" name="niveau" class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300 appearance-none">
-                    <option value="L3" class="bg-slate-900">Licence 3 (Bachelor)</option>
-                    <option value="M1" class="bg-slate-900">Master 1</option>
-                    <option value="M2" class="bg-slate-900">Master 2</option>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+                <label class="auth-label" for="matricule">Matricule</label>
+                <div class="input-wrap">
+                    <input id="matricule" name="matricule" type="text" class="auth-input" value="{{ old('matricule') }}" placeholder="ETU2026001" required>
+                </div>
+                <x-input-error :messages="$errors->get('matricule')" />
+            </div>
+            <div>
+                <label class="auth-label" for="niveau">Niveau</label>
+                <select id="niveau" name="niveau" class="auth-input">
+                    <option value="Licence 3">Licence 3</option>
+                    <option value="Master 1">Master 1</option>
+                    <option value="Master 2">Master 2</option>
                 </select>
+                <x-input-error :messages="$errors->get('niveau')" />
             </div>
         </div>
 
-        <!-- Filière -->
-        <div class="group">
-            <x-input-label for="filiere" :value="__('Filière')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-            <input id="filiere" type="text" name="filiere" :value="old('filiere')" required class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="Ex: Intelligence Artificielle">
-            <x-input-error :messages="$errors->get('filiere')" class="mt-2" />
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Password -->
-            <div class="group">
-                <x-input-label for="password" :value="__('Mot de passe')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <input id="password" type="password" name="password" required autocomplete="new-password" class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="••••••••">
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        <div>
+            <label class="auth-label" for="filiere">Filière</label>
+            <div class="input-wrap">
+                <input id="filiere" name="filiere" type="text" class="auth-input" value="{{ old('filiere') }}" placeholder="Ex : Intelligence Artificielle" required>
             </div>
+            <x-input-error :messages="$errors->get('filiere')" />
+        </div>
 
-            <!-- Confirm Password -->
-            <div class="group">
-                <x-input-label for="password_confirmation" :value="__('Confirmation')" class="text-slate-300 font-bold mb-2 block group-focus-within:text-blue-400 transition-colors" />
-                <input id="password_confirmation" type="password" name="password_confirmation" required class="block w-full px-5 py-4 bg-slate-900/50 border border-slate-700 rounded-2xl text-white placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500 transition-all duration-300" placeholder="••••••••">
-                <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div>
+                <label class="auth-label" for="password">Mot de passe</label>
+                <div class="input-wrap">
+                    <span class="input-icon"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></span>
+                    <input id="password" name="password" type="password" class="auth-input" placeholder="••••••••" required autocomplete="new-password">
+                </div>
+                <x-input-error :messages="$errors->get('password')" />
+            </div>
+            <div>
+                <label class="auth-label" for="password_confirmation">Confirmation</label>
+                <div class="input-wrap">
+                    <span class="input-icon"><svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></span>
+                    <input id="password_confirmation" name="password_confirmation" type="password" class="auth-input" placeholder="••••••••" required>
+                </div>
             </div>
         </div>
 
-        <div class="pt-6">
-            <button type="submit" class="w-full btn-premium py-5 text-xl tracking-tight">
-                {{ __('Créer mon compte étudiant') }}
-            </button>
-        </div>
+        <button type="submit" class="btn-auth" style="margin-top:0.5rem;">Créer mon compte</button>
 
-        <div class="text-center mt-10">
-            <p class="text-slate-500 font-medium">
-                Déjà membre du portail ? 
-                <a href="{{ route('login') }}" class="text-blue-400 font-bold hover:text-blue-300 transition decoration-2 underline-offset-4">
-                    Se connecter ici
-                </a>
-            </p>
-        </div>
+        <p style="font-size:0.78rem;font-weight:500;color:#A3AED0;text-align:center;">
+            Déjà membre ?
+            <a href="{{ route('login') }}" class="auth-link">Se connecter</a>
+        </p>
     </form>
+
 </x-guest-layout>

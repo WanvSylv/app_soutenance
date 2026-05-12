@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir \"c:\\\\wamp64\\\\www\\\\app_soutenance\\\\database\\\\migrations\")",
+      "Bash(php artisan *)",
+      "Bash(composer install *)",
+      "Bash(rename \"database\\\\migrations\\\\2026_04_30_081357_create_notes_table.php\" \"2026_04_30_082000_create_notes_table.php\")",
+      "PowerShell(Rename-Item \"c:\\\\wamp64\\\\www\\\\app_soutenance\\\\database\\\\migrations\\\\2026_04_30_081357_create_notes_table.php\" \"2026_04_30_082000_create_notes_table.php\")",
+      "Bash(git rm *)",
+      "Bash(git commit -m ' *)",
+      "Bash(Get-ChildItem -Path \"c:\\\\wamp64\\\\www\\\\app_soutenance\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\wamp64\\\\www\\\\MCVT\" -Directory)",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\wamp64\\\\www\\\\MCVT\" | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\wamp64\\\\www\\\\MCVT\\\\dgdu\" | ForEach-Object { $_.Name })",
+      "PowerShell(Get-ChildItem -Path \"C:\\\\wamp64\\\\www\\\\MCVT\\\\dgdu\\\\frontend\" | ForEach-Object { $_.Name })"
+    ]
+  }
+}

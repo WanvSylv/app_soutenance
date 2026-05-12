@@ -1,58 +1,54 @@
 <x-app-layout>
-    @section('header', 'Ajouter une Salle')
+@section('header', 'Ajouter une salle')
 
-    <div class="max-w-2xl mx-auto">
-        <div class="mb-6">
-            <a href="{{ route('admin.salles.index') }}" class="text-sm text-blue-500 hover:underline flex items-center">
-                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Retour à la liste
-            </a>
+<a href="{{ route('admin.salles.index') }}" class="form-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Retour à la liste
+</a>
+
+<div class="form-card">
+    <form action="{{ route('admin.salles.store') }}" method="POST">
+        @csrf
+
+        <div class="form-section-title">Identification</div>
+        <div class="form-grid">
+            <div class="form-field">
+                <label class="form-label" for="code">Code</label>
+                <input id="code" name="code" type="text" class="form-input" value="{{ old('code') }}" placeholder="Ex : CONF-A" required>
+                <x-input-error :messages="$errors->get('code')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="nom">Désignation</label>
+                <input id="nom" name="nom" type="text" class="form-input" value="{{ old('nom') }}" placeholder="Ex : Salle de Conférence A" required>
+                <x-input-error :messages="$errors->get('nom')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="capacite">Capacité (places)</label>
+                <input id="capacite" name="capacite" type="number" class="form-input" value="{{ old('capacite') }}" min="1" placeholder="Ex : 30">
+                <x-input-error :messages="$errors->get('capacite')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="localisation">Localisation</label>
+                <input id="localisation" name="localisation" type="text" class="form-input" value="{{ old('localisation') }}" placeholder="Ex : Bâtiment B, 1er étage">
+                <x-input-error :messages="$errors->get('localisation')" />
+            </div>
         </div>
 
-        <div class="glass-card p-8">
-            <form action="{{ route('admin.salles.store') }}" method="POST" class="space-y-6">
-                @csrf
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <x-input-label for="code" :value="__('Code de la salle')" />
-                        <x-text-input id="code" name="code" type="text" class="mt-1 block w-full" :value="old('code')" required placeholder="ex: SALLE-01" />
-                        <x-input-error class="mt-2" :messages="$errors->get('code')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="nom" :value="__('Nom complet')" />
-                        <x-text-input id="nom" name="nom" type="text" class="mt-1 block w-full" :value="old('nom')" required placeholder="ex: Amphithéâtre A" />
-                        <x-input-error class="mt-2" :messages="$errors->get('nom')" />
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <x-input-label for="capacite" :value="__('Capacité (personnes)')" />
-                        <x-text-input id="capacite" name="capacite" type="number" class="mt-1 block w-full" :value="old('capacite')" min="1" />
-                        <x-input-error class="mt-2" :messages="$errors->get('capacite')" />
-                    </div>
-
-                    <div>
-                        <x-input-label for="localisation" :value="__('Localisation / Bâtiment')" />
-                        <x-text-input id="localisation" name="localisation" type="text" class="mt-1 block w-full" :value="old('localisation')" placeholder="ex: Bâtiment B, 1er étage" />
-                        <x-input-error class="mt-2" :messages="$errors->get('localisation')" />
-                    </div>
-                </div>
-
-                <div>
-                    <x-input-label for="equipements" :value="__('Équipements (optionnel)')" />
-                    <textarea id="equipements" name="equipements" rows="3" class="mt-1 block w-full border-[#E0E5F2] bg-[#F4F7FE] text-[#1B254B] focus:border-[#2D60FF] focus:ring-[#2D60FF]/10 rounded-[1.25rem] shadow-sm transition-all duration-300 font-semibold" placeholder="Ex: Vidéoprojecteur, Tableau blanc, etc.">{{ old('equipements') }}</textarea>
-                    <x-input-error class="mt-2" :messages="$errors->get('equipements')" />
-                </div>
-
-                <div class="flex justify-end pt-4">
-                    <button type="submit" class="btn-premium px-8">
-                        Enregistrer la salle
-                    </button>
-                </div>
-            </form>
+        <div class="form-section">
+            <div class="form-field">
+                <label class="form-label" for="equipements">Équipements</label>
+                <textarea id="equipements" name="equipements" rows="3" class="form-input" placeholder="Ex : Vidéoprojecteur, Tableau blanc…" style="resize:vertical;">{{ old('equipements') }}</textarea>
+                <x-input-error :messages="$errors->get('equipements')" />
+            </div>
         </div>
-    </div>
+
+        <div class="form-actions">
+            <a href="{{ route('admin.salles.index') }}" class="btn-outline">Annuler</a>
+            <button type="submit" class="btn-premium">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+@include('admin._form-styles')
+@include('admin._table-styles')
 </x-app-layout>

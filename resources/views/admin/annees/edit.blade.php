@@ -1,56 +1,55 @@
 <x-app-layout>
-    @section('header', 'Modifier la Session')
+@section('header', 'Modifier la session')
 
-    <div class="max-w-2xl mx-auto animate-fade-in">
-        <div class="mb-8">
-            <a href="{{ route('admin.annees-academiques.index') }}" class="inline-flex items-center text-sm font-bold text-blue-500 hover:text-blue-400 transition">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                Retour à la liste des sessions
-            </a>
+<a href="{{ route('admin.annees-academiques.index') }}" class="form-back">
+    <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+    Retour à la liste
+</a>
+
+<div class="form-card">
+    <form action="{{ route('admin.annees-academiques.update', $annee->id) }}" method="POST">
+        @csrf @method('PUT')
+
+        <div class="form-section-title">Informations</div>
+        <div class="form-field" style="margin-bottom:1.25rem;">
+            <label class="form-label" for="libelle">Libellé</label>
+            <input id="libelle" name="libelle" type="text" class="form-input" value="{{ old('libelle', $annee->libelle) }}" required>
+            <x-input-error :messages="$errors->get('libelle')" />
         </div>
 
-        <div class="glass-card p-10">
-            <form action="{{ route('admin.annees-academiques.update', $annee->id) }}" method="POST" class="space-y-8">
-                @csrf
-                @method('PUT')
-
-                <div class="group">
-                    <x-input-label for="libelle" :value="__('Libellé de la session')" />
-                    <x-text-input id="libelle" name="libelle" type="text" class="block w-full" :value="old('libelle', $annee->libelle)" required />
-                    <x-input-error class="mt-2" :messages="$errors->get('libelle')" />
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="group">
-                        <x-input-label for="date_debut" :value="__('Date de début')" />
-                        <x-text-input id="date_debut" name="date_debut" type="date" class="block w-full" :value="old('date_debut', $annee->date_debut->format('Y-m-d'))" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('date_debut')" />
-                    </div>
-
-                    <div class="group">
-                        <x-input-label for="date_fin" :value="__('Date de fin')" />
-                        <x-text-input id="date_fin" name="date_fin" type="date" class="block w-full" :value="old('date_fin', $annee->date_fin->format('Y-m-d'))" required />
-                        <x-input-error class="mt-2" :messages="$errors->get('date_fin')" />
-                    </div>
-                </div>
-
-                <div class="p-6 bg-blue-50 rounded-2xl flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-bold text-[#1B254B]">État de la session</p>
-                        <p class="text-xs text-[#A3AED0] font-medium mt-1">Activer cette session rendra les autres inactives.</p>
-                    </div>
-                    <label class="relative inline-flex items-center cursor-pointer">
-                        <input type="checkbox" name="active" value="1" class="sr-only peer" {{ old('active', $annee->active) ? 'checked' : '' }}>
-                        <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                    </label>
-                </div>
-
-                <div class="flex justify-end pt-6">
-                    <button type="submit" class="btn-premium px-12">
-                        Mettre à jour la session
-                    </button>
-                </div>
-            </form>
+        <div class="form-grid">
+            <div class="form-field">
+                <label class="form-label" for="date_debut">Date de début</label>
+                <input id="date_debut" name="date_debut" type="date" class="form-input" value="{{ old('date_debut', $annee->date_debut->format('Y-m-d')) }}" required>
+                <x-input-error :messages="$errors->get('date_debut')" />
+            </div>
+            <div class="form-field">
+                <label class="form-label" for="date_fin">Date de fin</label>
+                <input id="date_fin" name="date_fin" type="date" class="form-input" value="{{ old('date_fin', $annee->date_fin->format('Y-m-d')) }}" required>
+                <x-input-error :messages="$errors->get('date_fin')" />
+            </div>
         </div>
-    </div>
+
+        <div class="form-section">
+            <div class="toggle-row">
+                <div>
+                    <div class="toggle-label">Session active</div>
+                    <div class="toggle-sub">Activer cette session rendra les autres inactives.</div>
+                </div>
+                <label style="position:relative;display:inline-flex;align-items:center;cursor:pointer;">
+                    <input type="checkbox" name="active" value="1" class="sr-only peer" {{ old('active', $annee->active) ? 'checked' : '' }}>
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#2D60FF]"></div>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ route('admin.annees-academiques.index') }}" class="btn-outline">Annuler</a>
+            <button type="submit" class="btn-premium">Enregistrer</button>
+        </div>
+    </form>
+</div>
+
+@include('admin._form-styles')
+@include('admin._table-styles')
 </x-app-layout>

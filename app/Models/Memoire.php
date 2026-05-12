@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Memoire extends Model
 {
+    protected $casts = [
+        'date_depot' => 'datetime',
+        'valide_at'  => 'datetime',
+    ];
+
     protected $fillable = [
         'etudiant_id',
         'soutenance_id',

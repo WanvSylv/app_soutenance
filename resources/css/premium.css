@@ -56,30 +56,28 @@ body {
 .btn-premium {
     background: var(--brand);
     color: #fff;
-    padding: 0.85rem 2rem;
-    border-radius: 0.75rem;
+    padding: 0.75rem 1.75rem;
+    border-radius: 6px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6rem;
+    gap: 0.5rem;
     border: none;
     cursor: pointer;
-    transition: all 0.25s ease;
-    box-shadow: 0 6px 18px rgba(45, 96, 255, 0.22);
-    letter-spacing: 0.01em;
+    transition: background 0.18s ease, letter-spacing 0.18s ease;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .btn-premium:hover {
     background: var(--brand-dark);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(45, 96, 255, 0.32);
+    letter-spacing: 0.05em;
 }
 
 .btn-premium:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 12px rgba(45, 96, 255, 0.2);
+    filter: brightness(0.92);
 }
 
 /* Lien sidebar */
