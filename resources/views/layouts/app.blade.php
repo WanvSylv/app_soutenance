@@ -169,10 +169,6 @@
                 }
             }
 
-            // Fermer si clic sur le backdrop
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('sidebar-backdrop').addEventListener('click', toggleSidebar);
-            });
         </script>
         <style>
             @media (max-width: 767px) {
