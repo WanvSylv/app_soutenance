@@ -112,7 +112,7 @@
                             </div>
                             <div style="width:34px;height:34px;border-radius:8px;overflow:hidden;flex-shrink:0;">
                                 @if(auth()->user()->photo_path)
-                                    <img src="{{ asset('storage/' . auth()->user()->photo_path) }}" alt="Profile" style="width:100%;height:100%;object-fit:cover;">
+                                    <img src="{{ asset(auth()->user()->photo_path) }}" alt="Profile" style="width:100%;height:100%;object-fit:cover;">
                                 @else
                                     <div style="width:100%;height:100%;background:#2D60FF;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:900;text-transform:uppercase;">{{ substr(auth()->user()->prenom,0,1) }}{{ substr(auth()->user()->nom,0,1) }}</div>
                                 @endif

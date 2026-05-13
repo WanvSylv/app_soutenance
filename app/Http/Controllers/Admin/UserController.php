@@ -34,7 +34,10 @@ class UserController extends Controller
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos/profiles', 'public');
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profiles'), $filename);
+            $photoPath = 'uploads/profiles/' . $filename;
         }
 
         $password = \Illuminate\Support\Str::random(10);
@@ -80,9 +83,12 @@ class UserController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($user->photo_path) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($user->photo_path);
+                @unlink(public_path($user->photo_path));
             }
-            $data['photo_path'] = $request->file('photo')->store('photos/profiles', 'public');
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profiles'), $filename);
+            $data['photo_path'] = 'uploads/profiles/' . $filename;
         }
 
         $user->update($data);

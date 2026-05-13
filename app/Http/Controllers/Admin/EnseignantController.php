@@ -37,7 +37,10 @@ class EnseignantController extends Controller
 
         $photoPath = null;
         if ($request->hasFile('photo')) {
-            $photoPath = $request->file('photo')->store('photos/profiles', 'public');
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profiles'), $filename);
+            $photoPath = 'uploads/profiles/' . $filename;
         }
 
         $password = Str::random(10);
@@ -96,9 +99,12 @@ class EnseignantController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($enseignant->user->photo_path) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($enseignant->user->photo_path);
+                @unlink(public_path($enseignant->user->photo_path));
             }
-            $userData['photo_path'] = $request->file('photo')->store('photos/profiles', 'public');
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profiles'), $filename);
+            $userData['photo_path'] = 'uploads/profiles/' . $filename;
         }
 
         $enseignant->user->update($userData);

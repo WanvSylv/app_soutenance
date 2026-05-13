@@ -166,7 +166,7 @@
         <a href="{{ route('profile.edit') }}" class="sidebar-user" style="text-decoration:none;" title="Mon profil">
             <div class="sidebar-avatar" style="overflow:hidden;">
                 @if(auth()->user()->photo_path)
-                    <img src="{{ asset('storage/' . auth()->user()->photo_path) }}" style="width:100%;height:100%;object-fit:cover;">
+                    <img src="{{ asset(auth()->user()->photo_path) }}" style="width:100%;height:100%;object-fit:cover;">
                 @else
                     {{ substr(auth()->user()->prenom, 0, 1) }}{{ substr(auth()->user()->nom, 0, 1) }}
                 @endif

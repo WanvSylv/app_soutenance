@@ -32,9 +32,12 @@ class ProfileController extends Controller
 
         if ($request->hasFile('photo')) {
             if ($user->photo_path) {
-                Storage::disk('public')->delete($user->photo_path);
+                @unlink(public_path($user->photo_path));
             }
-            $validated['photo_path'] = $request->file('photo')->store('photos/profiles', 'public');
+            $file = $request->file('photo');
+            $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('uploads/profiles'), $filename);
+            $validated['photo_path'] = 'uploads/profiles/' . $filename;
         }
 
         $user->fill($validated);

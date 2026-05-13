@@ -14,7 +14,7 @@
             <div class="photo-preview">
                 <template x-if="!photoPreview">
                     @if($etudiant->user->photo_path)
-                        <img src="{{ asset('storage/'.$etudiant->user->photo_path) }}" style="width:100%;height:100%;object-fit:cover;">
+                        <img src="{{ asset($etudiant->user->photo_path) }}" style="width:100%;height:100%;object-fit:cover;">
                     @else
                         <svg width="28" height="28" fill="none" stroke="#A3AED0" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
                     @endif
