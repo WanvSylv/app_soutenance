@@ -173,9 +173,8 @@
             z-index: 1;
             width: 90%;
             height: 90%;
-            object-fit: cover;
+            object-fit: contain;
             border-radius: 2rem;
-            box-shadow: 0 30px 80px rgba(27,37,75,0.15);
         }
 
         /* Floating cards */
@@ -428,7 +427,7 @@
             <!-- Image -->
             <div class="hero-image-col fade-up delay-2">
                 <div class="image-blob"></div>
-                <img src="{{ asset('images/students_african.png') }}" alt="Étudiants" class="hero-img">
+                <img src="{{ asset('assets/images/etudiants.jpg') }}" alt="Étudiants" class="hero-img">
 
                 <!-- Card flottante haut-gauche -->
                 <div class="float-card" style="top: 10%; left: -2%;">

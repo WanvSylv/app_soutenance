@@ -63,8 +63,9 @@
         .auth-panel img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            opacity: 0.35;
+            object-fit: contain;
+            opacity: 0.75;
+            padding: 2rem;
         }
 
         .auth-panel-overlay {
@@ -199,7 +200,7 @@
 
     <!-- Panneau gauche -->
     <div class="auth-panel">
-        <img src="{{ asset('images/students_african.png') }}" alt="">
+        <img src="{{ asset('assets/images/etudiants.jpg') }}" alt="">
         <div class="auth-panel-overlay">
             <div class="auth-panel-logo">
                 <div class="logo-icon">
