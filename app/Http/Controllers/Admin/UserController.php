@@ -27,7 +27,7 @@ class UserController extends Controller
             'nom' => ['required', 'string', 'max:255'],
             'prenom' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'string', 'in:admin,responsable_academique,enseignant,etudiant'],
+            'role' => ['required', 'string', 'in:admin,responsable_academique'],
             'telephone' => ['nullable', 'string', 'max:20'],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:2048'],
         ]);
@@ -49,21 +49,6 @@ class UserController extends Controller
             'photo_path' => $photoPath,
             'actif' => true,
         ]);
-
-        // Créer les profils si nécessaire
-        if ($user->role === 'etudiant') {
-            $user->etudiant()->create([
-                'matricule' => 'TEMP_' . $user->id . '_' . time(),
-                'filiere' => 'À définir',
-                'niveau' => 'À définir',
-                'annee_inscription' => date('Y'),
-            ]);
-        } elseif ($user->role === 'enseignant') {
-            $user->enseignant()->create([
-                'grade' => 'À définir',
-                'specialite' => 'À définir',
-            ]);
-        }
 
         try {
             \Illuminate\Support\Facades\Mail::to($user->email)->send(new \App\Mail\WelcomeUserMail($user, $password));

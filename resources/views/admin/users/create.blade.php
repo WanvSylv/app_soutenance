@@ -54,9 +54,8 @@
                 <label class="form-label" for="role">Rôle</label>
                 <select id="role" name="role" class="form-input" required>
                     <option value="">Choisir un rôle …</option>
-                    <option value="admin"      {{ old('role') == 'admin'      ? 'selected' : '' }}>Administrateur</option>
-                    <option value="enseignant" {{ old('role') == 'enseignant' ? 'selected' : '' }}>Jury</option>
-                    <option value="etudiant"   {{ old('role') == 'etudiant'   ? 'selected' : '' }}>Étudiant</option>
+                    <option value="admin"                   {{ old('role') == 'admin'                   ? 'selected' : '' }}>Administrateur</option>
+                    <option value="responsable_academique"  {{ old('role') == 'responsable_academique'  ? 'selected' : '' }}>Responsable académique</option>
                 </select>
                 <x-input-error :messages="$errors->get('role')" />
             </div>
