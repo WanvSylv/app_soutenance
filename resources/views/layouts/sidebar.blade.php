@@ -163,15 +163,19 @@
 
     <!-- Profil + Déconnexion -->
     <div class="sidebar-footer">
-        <div class="sidebar-user">
-            <div class="sidebar-avatar">
-                {{ substr(auth()->user()->prenom, 0, 1) }}{{ substr(auth()->user()->nom, 0, 1) }}
+        <a href="{{ route('profile.edit') }}" class="sidebar-user" style="text-decoration:none;" title="Mon profil">
+            <div class="sidebar-avatar" style="overflow:hidden;">
+                @if(auth()->user()->photo_path)
+                    <img src="{{ asset('storage/' . auth()->user()->photo_path) }}" style="width:100%;height:100%;object-fit:cover;">
+                @else
+                    {{ substr(auth()->user()->prenom, 0, 1) }}{{ substr(auth()->user()->nom, 0, 1) }}
+                @endif
             </div>
             <div class="sidebar-user-info">
                 <span class="sidebar-user-name">{{ auth()->user()->prenom }} {{ auth()->user()->nom }}</span>
                 <span class="sidebar-user-role">{{ auth()->user()->isAdmin() ? 'Administrateur' : (auth()->user()->role === 'etudiant' ? 'Étudiant' : 'Jury') }}</span>
             </div>
-        </div>
+        </a>
         <form method="POST" action="{{ route('logout') }}" id="logout-form">
             @csrf
             <button type="button" onclick="confirmLogout()" class="sidebar-logout" title="Déconnexion">

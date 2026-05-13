@@ -105,7 +105,7 @@
                         <div style="width:1px;height:24px;background:#E0E5F2;"></div>
 
                         <!-- Profil -->
-                        <div style="display:flex;align-items:center;gap:0.6rem;">
+                        <a href="{{ route('profile.edit') }}" style="display:flex;align-items:center;gap:0.6rem;text-decoration:none;" title="Mon profil">
                             <div style="text-align:right;display:none;" class="sm-name">
                                 <div style="font-size:0.78rem;font-weight:700;color:#1B254B;line-height:1.2;">{{ auth()->user()->prenom }} {{ auth()->user()->nom }}</div>
                                 <div style="font-size:0.6rem;font-weight:700;color:#A3AED0;text-transform:uppercase;letter-spacing:0.1em;">{{ auth()->user()->isAdmin() ? 'Admin' : (auth()->user()->role === 'etudiant' ? 'Étudiant' : 'Jury') }}</div>
@@ -117,7 +117,7 @@
                                     <div style="width:100%;height:100%;background:#2D60FF;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:900;text-transform:uppercase;">{{ substr(auth()->user()->prenom,0,1) }}{{ substr(auth()->user()->nom,0,1) }}</div>
                                 @endif
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </header>
                 <style>
