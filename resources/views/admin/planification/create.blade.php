@@ -65,10 +65,10 @@
         <div class="form-section">
             <div class="form-section-title">Composition du jury</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;">
-                @foreach(['president_id'=>'Président','rapporteur_id'=>'Rapporteur','membre_id'=>'Membre (optionnel)'] as $field => $label)
+                @foreach(['president_id'=>'Président','rapporteur_id'=>'Rapporteur','membre_id'=>'Examinateur'] as $field => $label)
                 <div class="form-field">
                     <label class="form-label" for="{{ $field }}">{{ $label }}</label>
-                    <select id="{{ $field }}" name="{{ $field }}" class="form-input" {{ $field !== 'membre_id' ? 'required' : '' }}>
+                    <select id="{{ $field }}" name="{{ $field }}" class="form-input" required>
                         <option value="">Choisir…</option>
                         @foreach($enseignants as $e)
                         <option value="{{ $e->id }}" {{ old($field) == $e->id ? 'selected' : '' }}>
