@@ -19,13 +19,18 @@ class MemoireController extends Controller
             return redirect()->route('dashboard')->with('error', "Votre profil étudiant est incomplet. Veuillez contacter l'administration.");
         }
 
-        $memoire = $etudiant->memoires()->latest()->first();
         $anneeActive = AnneeAcademique::where('active', true)->first();
         $eligible = $etudiant->quitus_valide;
         $paramSize = \App\Models\Parametre::where('cle', 'taille_max_memoire_mo')->first();
         $maxMo = $paramSize ? (int)$paramSize->valeur : 50;
 
-        return view('etudiant.memoire.index', compact('etudiant', 'memoire', 'anneeActive', 'eligible', 'maxMo'));
+        $memoire = $anneeActive
+            ? $etudiant->memoires()->where('annee_academique_id', $anneeActive->id)->latest()->first()
+            : null;
+
+        $versions = $memoire ? $memoire->versions()->latest('numero_version')->get() : collect();
+
+        return view('etudiant.memoire.index', compact('etudiant', 'memoire', 'anneeActive', 'eligible', 'maxMo', 'versions'));
     }
 
     public function store(Request $request)
@@ -35,8 +40,8 @@ class MemoireController extends Controller
         $maxKo = $maxMo * 1024;
 
         $request->validate([
-            'titre' => 'required|string|max:500',
-            'resume' => 'nullable|string',
+            'titre'   => 'required|string|max:500',
+            'resume'  => 'nullable|string',
             'fichier' => 'required|mimes:pdf|max:' . $maxKo,
         ]);
 
@@ -55,32 +60,64 @@ class MemoireController extends Controller
             return back()->with('error', "Vous ne pouvez pas déposer de mémoire sans avoir obtenu votre quitus.");
         }
 
-        // Un seul mémoire par année active (selon les règles de gestion)
-        $dejaDepose = $etudiant->memoires()->where('annee_academique_id', $anneeActive->id)->exists();
-        if ($dejaDepose) {
-            return back()->with('error', "Vous avez déjà déposé un mémoire pour l'année en cours.");
+        $memoireExistant = $etudiant->memoires()
+            ->where('annee_academique_id', $anneeActive->id)
+            ->latest()
+            ->first();
+
+        if ($memoireExistant) {
+            // Re-soumission autorisée uniquement si corrections demandées ou rejeté
+            if (!$memoireExistant->isResoumettable()) {
+                return back()->with('error', "Vous avez déjà déposé un mémoire pour l'année en cours.");
+            }
+
+            // Incrémenter la version et remplacer le fichier
+            $path = $request->file('fichier')->store('memoires');
+
+            $memoireExistant->update([
+                'titre'           => $request->titre,
+                'resume'          => $request->resume,
+                'fichier_path'    => $path,
+                'taille_fichier_ko' => round($request->file('fichier')->getSize() / 1024),
+                'date_depot'      => now(),
+                'statut'          => 'en_attente',
+                'motif_rejet'     => null,
+                'valide_at'       => null,
+                'valide_par'      => null,
+                'numero_version'  => $memoireExistant->numero_version + 1,
+            ]);
+
+            auth()->user()->notify(new \App\Notifications\SimpleNotification(
+                'Nouvelle version déposée',
+                'Votre mémoire version V' . $memoireExistant->numero_version . ' a été soumis avec succès.',
+                route('etudiant.memoire.index')
+            ));
+
+            return redirect()->route('etudiant.memoire.index')
+                ->with('success', 'Votre nouvelle version a été soumise avec succès.');
         }
 
         $path = $request->file('fichier')->store('memoires');
 
         Memoire::create([
-            'etudiant_id' => $etudiant->id,
+            'etudiant_id'        => $etudiant->id,
             'annee_academique_id' => $anneeActive->id,
-            'titre' => $request->titre,
-            'resume' => $request->resume,
-            'fichier_path' => $path,
-            'taille_fichier_ko' => round($request->file('fichier')->getSize() / 1024),
-            'date_depot' => now(),
+            'titre'              => $request->titre,
+            'resume'             => $request->resume,
+            'fichier_path'       => $path,
+            'taille_fichier_ko'  => round($request->file('fichier')->getSize() / 1024),
+            'date_depot'         => now(),
+            'numero_version'     => 1,
         ]);
 
-        // Notifier l'étudiant
         auth()->user()->notify(new \App\Notifications\SimpleNotification(
             'Dépôt de mémoire',
             'Votre mémoire "' . $request->titre . '" a été déposé avec succès.',
             route('etudiant.memoire.index')
         ));
 
-        return redirect()->route('etudiant.memoire.index')->with('success', 'Votre mémoire a été déposé avec succès.');
+        return redirect()->route('etudiant.memoire.index')
+            ->with('success', 'Votre mémoire a été déposé avec succès.');
     }
 
     public function viewFile()

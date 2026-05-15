@@ -121,7 +121,8 @@ class PlanificationController extends Controller
 
         $etudiants = Etudiant::where('quitus_valide', true)
             ->whereHas('memoires', function($q) use ($anneeActive) {
-                $q->where('annee_academique_id', $anneeActive->id);
+                $q->where('annee_academique_id', $anneeActive->id)
+                  ->where('statut', 'valide');
             })
             ->whereDoesntHave('soutenances', function($q) use ($anneeActive) {
                 $q->where('annee_academique_id', $anneeActive->id);

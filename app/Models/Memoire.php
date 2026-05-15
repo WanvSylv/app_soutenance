@@ -24,6 +24,7 @@ class Memoire extends Model
         'valide_at',
         'valide_par',
         'motif_rejet',
+        'numero_version',
     ];
 
     public function validator()
@@ -44,5 +45,15 @@ class Memoire extends Model
     public function anneeAcademique()
     {
         return $this->belongsTo(AnneeAcademique::class);
+    }
+
+    public function versions()
+    {
+        return $this->hasMany(MemoireVersion::class)->orderBy('numero_version');
+    }
+
+    public function isResoumettable(): bool
+    {
+        return in_array($this->statut, ['corrections_demandees', 'rejete']);
     }
 }

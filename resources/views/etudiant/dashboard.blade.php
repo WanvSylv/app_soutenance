@@ -63,22 +63,52 @@
         </div>
 
         {{-- Mon mémoire --}}
-        <div class="data-card">
+        <div class="data-card" style="{{ ($memoire && in_array($memoire->statut, ['corrections_demandees','rejete'])) ? 'border:2px solid #FDE68A;' : '' }}">
             <div class="panel-header"><span class="panel-title">Mon mémoire</span></div>
             <div style="padding:1.25rem 1.5rem;">
                 @if($memoire)
-                    <div style="font-size:0.825rem;font-weight:700;color:#1B254B;margin-bottom:0.5rem;line-height:1.4;">{{ $memoire->titre }}</div>
-                    <div class="row-sub" style="margin-bottom:1rem;">Déposé le {{ $memoire->updated_at->translatedFormat('d F Y') }}</div>
-                    <a href="{{ route('etudiant.memoire.view') }}" target="_blank" class="btn-premium" style="font-size:0.72rem;padding:0.5rem 1rem;">
-                        <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                        Voir le fichier
-                    </a>
+                    @php
+                        $mBadges = [
+                            'en_attente'            => ['badge-amber',  'En attente'],
+                            'valide'                => ['badge-green',  'Validé'],
+                            'rejete'                => ['badge-red',    'Rejeté'],
+                            'corrections_demandees' => ['badge-orange', 'Corrections demandées'],
+                        ];
+                        [$mCls, $mLbl] = $mBadges[$memoire->statut] ?? ['badge-amber','—'];
+                    @endphp
+                    <span class="badge {{ $mCls }}" style="margin-bottom:0.65rem;display:inline-block;">{{ $mLbl }}</span>
+                    <div style="font-size:0.825rem;font-weight:700;color:#1B254B;margin-bottom:0.4rem;line-height:1.4;">{{ $memoire->titre }}</div>
+                    <div class="row-sub" style="margin-bottom:1rem;">V{{ $memoire->numero_version }} — Déposé le {{ $memoire->updated_at->translatedFormat('d F Y') }}</div>
+
+                    @if($memoire->statut === 'corrections_demandees')
+                        <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:0.65rem 0.875rem;margin-bottom:0.875rem;font-size:0.775rem;font-weight:500;color:#92400E;">
+                            <strong style="display:block;margin-bottom:0.25rem;">Action requise :</strong>
+                            {{ Str::limit($memoire->motif_rejet, 120) }}
+                        </div>
+                        <a href="{{ route('etudiant.memoire.index') }}" class="btn-premium" style="font-size:0.72rem;padding:0.5rem 1rem;background:#D97706;">
+                            Soumettre la version corrigée →
+                        </a>
+                    @elseif($memoire->statut === 'rejete')
+                        <div style="background:#FFF5F5;border:1px solid #FECACA;border-radius:6px;padding:0.65rem 0.875rem;margin-bottom:0.875rem;font-size:0.775rem;font-weight:500;color:#991B1B;">
+                            <strong style="display:block;margin-bottom:0.25rem;">Mémoire rejeté :</strong>
+                            {{ Str::limit($memoire->motif_rejet, 120) }}
+                        </div>
+                        <a href="{{ route('etudiant.memoire.index') }}" class="btn-premium" style="font-size:0.72rem;padding:0.5rem 1rem;background:#DC2626;">
+                            Soumettre une nouvelle version →
+                        </a>
+                    @else
+                        <a href="{{ route('etudiant.memoire.view') }}" target="_blank" class="btn-premium" style="font-size:0.72rem;padding:0.5rem 1rem;">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                            Voir le fichier
+                        </a>
+                    @endif
                 @else
                     <p class="empty-state" style="padding:1rem 0;">Aucun mémoire déposé.</p>
                     <a href="{{ route('etudiant.memoire.index') }}" class="btn-premium" style="font-size:0.72rem;padding:0.5rem 1rem;">Déposer mon mémoire</a>
                 @endif
             </div>
         </div>
+        <style>.badge-orange{background:#FFFBEB;color:#D97706;border:1px solid #FDE68A;}</style>
     </div>
 
     {{-- Colonne droite --}}

@@ -29,7 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('memoires', [\App\Http\Controllers\Admin\MemoireController::class, 'index'])->name('memoires.index');
         Route::post('memoires/{memoire}/valider', [\App\Http\Controllers\Admin\MemoireController::class, 'valider'])->name('memoires.valider');
         Route::post('memoires/{memoire}/rejeter', [\App\Http\Controllers\Admin\MemoireController::class, 'rejeter'])->name('memoires.rejeter');
+        Route::post('memoires/{memoire}/corrections', [\App\Http\Controllers\Admin\MemoireController::class, 'demanderCorrection'])->name('memoires.corrections');
         Route::get('memoires/{memoire}/download', [\App\Http\Controllers\Admin\MemoireController::class, 'download'])->name('memoires.download');
+        Route::get('memoire-versions/{version}/download', [\App\Http\Controllers\Admin\MemoireController::class, 'downloadVersion'])->name('memoires.version.download');
 
         // Planification (Admin Actions only)
         Route::resource('planification', \App\Http\Controllers\Admin\PlanificationController::class)->except(['index']);
