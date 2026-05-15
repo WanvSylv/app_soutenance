@@ -10,6 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Mail\WelcomeUserMail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
@@ -31,6 +33,8 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        $plainPassword = $request->password;
+
         $request->validate([
             'nom' => ['required', 'string', 'max:100'],
             'prenom' => ['required', 'string', 'max:100'],
@@ -58,6 +62,8 @@ class RegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+
+        Mail::to($user->email)->send(new WelcomeUserMail($user, $plainPassword));
 
         Auth::login($user);
 
